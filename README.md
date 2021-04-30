@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-git clone https://github.com/water-vapor/neko.git
+git clone https://github.com/cortical-team/neko.git
 cd neko
 pip install -e .
 ```
