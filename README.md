@@ -46,12 +46,12 @@ python examples/timit.py
 Regularization enabled:
 ```bash
 python timit.py --reg --eprop_mode symmetric --reg_coeff 5e-7
-# {'loss': 0.8918977379798889, 'accuracy': 0.7501428091397849, 'firing_rate': 12.973159790039062}
+# Test: {'loss': 0.8918977379798889, 'accuracy': 0.7501428091397849, 'firing_rate': 12.973159790039062}
 ```
 Faster training (~7.5X, 28s per epoch with RTX3090) with regularization enabled:
 ```bash
 python timit.py --reg --eprop_mode symmetric --reg_coeff 3e-8 --batch_size 256  --learning_rate 0.01
-# Test:  Test:  {'loss': 0.8605409860610962, 'accuracy': 0.7542506720430108, 'firing_rate': 13.105131149291992}
+# Test: {'loss': 0.8605409860610962, 'accuracy': 0.7542506720430108, 'firing_rate': 13.105131149291992}
 ```
 
 ### Probabilistic learning with HMC
