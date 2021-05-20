@@ -10,6 +10,7 @@ from neko.evaluator import Evaluator
 from neko.layers import ALIFRNNModel, LIFRNNModel, BasicRNNModel
 from neko.learning_rules import Backprop, Eprop
 from neko.losses import get_loss
+from neko.optimizers import Adam
 from neko.trainers import Trainer
 from timit_tools import TimitDataset
 
@@ -24,6 +25,8 @@ def main():
     parser.add_argument('--layer', dest='layer', type=str, default='ALIF', help='type of RNN/RSNN to use')
     parser.add_argument('--hidden', dest='hidden', type=int, default=200, help='number of neurons in a hidden layer')
     parser.add_argument('--firing_thresh', dest='firing_thresh', type=float, default=1.0, help='firing threshhold')
+    parser.add_argument('--learning_rate', dest='learning_rate', type=float, default=0.001,
+                        help='learning rate of adam optimizer')
     parser.add_argument('--eprop_mode', dest='eprop_mode', type=str, default='adaptive', help='eprop mode to use')
     parser.add_argument('--reg', dest='reg', action='store_true', default=False, help='enable regularization')
     parser.add_argument('--reg_coeff', dest='reg_coeff', type=float, default=0.00005, help='regularization coefficient')
@@ -64,12 +67,14 @@ def main():
                 , v_th=args.firing_thresh, seed=args.seed)
     evaluated_model = Evaluator(model=rnn, loss=loss, metrics=['accuracy', 'firing_rate'])
     algo = learning_rule(evaluated_model,
+                         optimizer=Adam(learning_rate=args.learning_rate),
                          mode=args.eprop_mode,
                          firing_rate_regularization=args.reg,
                          c_reg=args.reg_coeff,
                          f_target=args.reg_target)
     trainer = Trainer(algo)
-    training_log = trainer.train(x_train, y_train, epochs=args.epoch, batch_size=args.batch_size)
+    training_log = trainer.train(x_train, y_train, epochs=args.epoch, batch_size=args.batch_size,
+                                 validation_data=(x_test, y_test))
     test_result = evaluated_model.evaluate(x_test, y_test, return_nparray=True)
     print('Test: ', test_result)
     completion_time = int(time.time())

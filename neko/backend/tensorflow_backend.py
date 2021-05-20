@@ -16,7 +16,7 @@ def disable_gpu():
 
 def seed_random(seed):
     np.random.seed(seed)
-    tf.random.set_seed(0)
+    tf.random.set_seed(seed)
 
 
 float16 = tf.float16
