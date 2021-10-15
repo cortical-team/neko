@@ -1,5 +1,8 @@
 # Neko: a Library for Exploring Neuromorphic Learning Rules
 
+## Paper
+https://arxiv.org/abs/2105.00324
+
 ## Installation
 
 ```bash
